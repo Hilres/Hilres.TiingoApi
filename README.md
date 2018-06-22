@@ -1,6 +1,6 @@
 # Gets stock data from the Tiingo web service
 
-[![NuGet](https://img.shields.io/badge/NuGet-0.1.0-blue.svg)](https://www.myget.org/feed/hilres/package/nuget/Hilres.TiingoApi)
+[![NuGet](https://img.shields.io/badge/NuGet-0.1.1-blue.svg)](https://www.myget.org/feed/hilres/package/nuget/Hilres.TiingoApi)
 
 This will retrieve stock data from the Tiingo web service.  Historical price data and meta data.
 
