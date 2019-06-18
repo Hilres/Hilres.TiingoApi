@@ -1,5 +1,5 @@
 ﻿
-Get the authorization token here: https://api.tiingo.com/account/token
+Get the authorization token here: https://api.tiingo.com/account/api/token
 
 The authentication token should be put into the user secrets cache.  Don't want it checked into the source control.
 
