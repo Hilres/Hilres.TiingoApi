@@ -1,4 +1,4 @@
-﻿// <copyright file="Extensions.cs" company="Hilres">
+﻿// <copyright file="InternalExtensions.cs" company="Hilres">
 // Copyright (c) Hilres. All rights reserved.
 // </copyright>
 
@@ -10,9 +10,9 @@ namespace Hilres.TiingoApi
     using System.Web;
 
     /// <summary>
-    /// Extensions class.
+    /// Internal extensions class.
     /// </summary>
-    internal static class Extensions
+    internal static class InternalExtensions
     {
         /// <summary>
         /// Append a date parameter if there is a date.

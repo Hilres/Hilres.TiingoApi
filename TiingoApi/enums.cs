@@ -27,6 +27,6 @@ namespace Hilres.TiingoApi
         /// <summary>
         /// annually: Values returned as annual data, with days ending on the last standard business day(Mon-Fri) of each year
         /// </summary>
-        Annually
+        Annually,
     }
 }

@@ -13,6 +13,7 @@ namespace Hilres.TiingoApi
     using System.Text;
     using System.Threading.Tasks;
     using Hilres.CSV;
+    using Microsoft.Extensions.Configuration;
 
     /// <summary>
     /// Tiingo service class.
@@ -29,6 +30,15 @@ namespace Hilres.TiingoApi
         public TiingoService(TiingoSettings settings)
         {
             this.settings = settings ?? throw new NullReferenceException("settings must be set.");
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TiingoService"/> class.
+        /// </summary>
+        /// <param name="configuration">IConfiguration</param>
+        public TiingoService(IConfiguration configuration)
+        {
+            this.settings = new TiingoSettings(configuration);
         }
 
         /// <summary>
@@ -99,7 +109,7 @@ namespace Hilres.TiingoApi
                 {
                     Items = tickers,
                     ApiSuccessful = true,
-                    ApiErrorMessage = null
+                    ApiErrorMessage = null,
                 };
             });
         }
@@ -126,7 +136,7 @@ namespace Hilres.TiingoApi
                         AssetType = item[2],
                         PriceCurrency = item[3],
                         StartDate = Parse.NullDateTime(item[4]),
-                        EndDate = Parse.NullDateTime(item[5])
+                        EndDate = Parse.NullDateTime(item[5]),
                     });
                 }
             }
@@ -190,7 +200,7 @@ namespace Hilres.TiingoApi
                                 ApiErrorMessage = null,
                                 ApiRawJson = jsonText,
                                 ApiSuccessful = true,
-                                Items = serializedObj
+                                Items = serializedObj,
                             };
 
                             return result as TResult;
@@ -213,7 +223,7 @@ namespace Hilres.TiingoApi
                         {
                             ApiErrorMessage = e.Message,
                             ApiRawJson = jsonText,
-                            ApiSuccessful = false
+                            ApiSuccessful = false,
                         };
                     }
                 }
@@ -260,7 +270,7 @@ namespace Hilres.TiingoApi
                 {
                     ApiErrorMessage = e.Message,
                     ApiRawJson = GetResponce(e),
-                    ApiSuccessful = false
+                    ApiSuccessful = false,
                 };
             }
         }
