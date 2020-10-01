@@ -74,13 +74,13 @@ namespace Hilres.TiingoApi.Tests
         /// <param name="count">Expect count of items in the results</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
         [Theory]
-        [InlineData("msft", "3/4/2018", "3/4/2018", ResampleFrequency.Daily, 0)]
-        [InlineData("msft", "3/5/2018", "3/5/2018", ResampleFrequency.Daily, 1)]
-        [InlineData("msft", "3/5/2018", "3/9/2018", ResampleFrequency.Daily, 5)]
-        [InlineData("msft", "12/31/2017", "2/28/2018", ResampleFrequency.Daily, 40)]
-        [InlineData("msft", "12/31/2017", "2/28/2018", ResampleFrequency.Weekly, 10)]
-        [InlineData("msft", "12/31/2017", "2/28/2018", ResampleFrequency.Monthly, 3)]
-        [InlineData("msft", "12/31/2017", "2/28/2018", ResampleFrequency.Annually, 2)]
+        [InlineData("msft", "2018-03-04", "2018-03-04", ResampleFrequency.Daily, 0)]
+        [InlineData("msft", "2018-03-05", "2018-03-05", ResampleFrequency.Daily, 1)]
+        [InlineData("msft", "2018-03-05", "2018-03-09", ResampleFrequency.Daily, 5)]
+        [InlineData("msft", "2017-12-31", "2018-02-28", ResampleFrequency.Daily, 40)]
+        [InlineData("msft", "2017-12-31", "2018-02-28", ResampleFrequency.Weekly, 10)]
+        [InlineData("msft", "2017-12-31", "2018-02-28", ResampleFrequency.Monthly, 3)]
+        [InlineData("msft", "2017-12-31", "2018-02-28", ResampleFrequency.Annually, 2)]
         public async Task GetStockPrices_DateRange(string ticker, string startDate, string endDate, ResampleFrequency frequency, int count)
         {
             TiingoList<TiingoStockPrice> result = await this.service.GetStockPricesAsync(
