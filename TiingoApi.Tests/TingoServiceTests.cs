@@ -27,7 +27,7 @@ namespace Hilres.TiingoApi.Tests
         /// <summary>
         /// Pass a null or blank to get stock meta should return an exception test.
         /// </summary>
-        /// <param name="ticker">The ticker associated with the stock, Mutual Fund or ETF</param>
+        /// <param name="ticker">The ticker associated with the stock, Mutual Fund or ETF.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
         [Theory]
         [InlineData(null)]
@@ -40,7 +40,7 @@ namespace Hilres.TiingoApi.Tests
         /// <summary>
         /// Get one stock meta data.
         /// </summary>
-        /// <param name="ticker">The ticker associated with the stock, Mutual Fund or ETF</param>
+        /// <param name="ticker">The ticker associated with the stock, Mutual Fund or ETF.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
         [Theory]
         [InlineData("msft")]
@@ -67,11 +67,11 @@ namespace Hilres.TiingoApi.Tests
         /// <summary>
         /// Get some stock price data by frequency and date range.
         /// </summary>
-        /// <param name="ticker">The ticker associated with the stock, Mutual Fund or ETF</param>
+        /// <param name="ticker">The ticker associated with the stock, Mutual Fund or ETF.</param>
         /// <param name="startDate">(optional) If startDate or endDate is not null, historical data will be queried. This filter limits metrics to on or later than the startDate.</param>
         /// <param name="endDate">(optional) If startDate or endDate is not null, historical data will be queried. This filter limits metrics to on or less than the endDate.</param>
-        /// <param name="frequency">(optional) Default: daily. Allows re-sampled values that allow you to choose the values returned as daily, weekly, monthly, or annually values. Note: ONLY DAILY takes into account holidays. All others use standard business days</param>
-        /// <param name="count">Expect count of items in the results</param>
+        /// <param name="frequency">(optional) Default: daily. Allows re-sampled values that allow you to choose the values returned as daily, weekly, monthly, or annually values. Note: ONLY DAILY takes into account holidays. All others use standard business days.</param>
+        /// <param name="count">Expect count of items in the results.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
         [Theory]
         [InlineData("msft", "3/4/2018", "3/4/2018", ResampleFrequency.Daily, 0)]
@@ -98,8 +98,8 @@ namespace Hilres.TiingoApi.Tests
         /// <summary>
         /// Get some stock price data by frequency.
         /// </summary>
-        /// <param name="ticker">The ticker associated with the stock, Mutual Fund or ETF</param>
-        /// <param name="frequency">(optional) Default: daily. Allows re-sampled values that allow you to choose the values returned as daily, weekly, monthly, or annually values. Note: ONLY DAILY takes into account holidays. All others use standard business days</param>
+        /// <param name="ticker">The ticker associated with the stock, Mutual Fund or ETF.</param>
+        /// <param name="frequency">(optional) Default: daily. Allows re-sampled values that allow you to choose the values returned as daily, weekly, monthly, or annually values. Note: ONLY DAILY takes into account holidays. All others use standard business days.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
         [Theory]
         [InlineData("msft", ResampleFrequency.Daily)]
@@ -119,7 +119,7 @@ namespace Hilres.TiingoApi.Tests
         /// <summary>
         /// Pass the ticker only.
         /// </summary>
-        /// <param name="ticker">The ticker associated with the stock, Mutual Fund or ETF</param>
+        /// <param name="ticker">The ticker associated with the stock, Mutual Fund or ETF.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
         [Theory]
         [InlineData("msft")]

@@ -12,7 +12,6 @@ namespace Hilres.TiingoApi
     using System.Runtime.Serialization.Json;
     using System.Text;
     using System.Threading.Tasks;
-    using Hilres.CSV;
     using Microsoft.Extensions.Configuration;
 
     /// <summary>
@@ -35,7 +34,7 @@ namespace Hilres.TiingoApi
         /// <summary>
         /// Initializes a new instance of the <see cref="TiingoService"/> class.
         /// </summary>
-        /// <param name="configuration">IConfiguration</param>
+        /// <param name="configuration">IConfiguration.</param>
         public TiingoService(IConfiguration configuration)
         {
             this.settings = new TiingoSettings(configuration);
@@ -44,8 +43,8 @@ namespace Hilres.TiingoApi
         /// <summary>
         /// Get stock meta.
         /// </summary>
-        /// <param name="ticker">The ticker associated with the stock, Mutual Fund or ETF</param>
-        /// <returns>TiingoList of StockMetaData</returns>
+        /// <param name="ticker">The ticker associated with the stock, Mutual Fund or ETF.</param>
+        /// <returns>TiingoList of StockMetaData.</returns>
         public async Task<TiingoStockMeta> GetStockMetaAsync(string ticker)
         {
             if (string.IsNullOrWhiteSpace(ticker))
@@ -60,11 +59,11 @@ namespace Hilres.TiingoApi
         /// <summary>
         /// Get stock prices.
         /// </summary>
-        /// <param name="ticker">The ticker associated with the stock, Mutual Fund or ETF</param>
+        /// <param name="ticker">The ticker associated with the stock, Mutual Fund or ETF.</param>
         /// <param name="startDate">(optional) If startDate or endDate is not null, historical data will be queried. This filter limits metrics to on or later than the startDate.</param>
         /// <param name="endDate">(optional) If startDate or endDate is not null, historical data will be queried. This filter limits metrics to on or less than the endDate.</param>
-        /// <param name="frequency">(optional) Default: daily. Allows re-sampled values that allow you to choose the values returned as daily, weekly, monthly, or annually values. Note: ONLY DAILY takes into account holidays. All others use standard business days</param>
-        /// <returns>TiingoList of StockPriceData</returns>
+        /// <param name="frequency">(optional) Default: daily. Allows re-sampled values that allow you to choose the values returned as daily, weekly, monthly, or annually values. Note: ONLY DAILY takes into account holidays. All others use standard business days.</param>
+        /// <returns>TiingoList of StockPriceData.</returns>
         public async Task<TiingoList<TiingoStockPrice>> GetStockPricesAsync(
                     string ticker,
                     DateTime? startDate = null,
@@ -97,10 +96,8 @@ namespace Hilres.TiingoApi
                     {
                         if (item.Name.EndsWith(".csv"))
                         {
-                            using (Stream stream = item.Open())
-                            {
-                                ExtractTickersFromStream(stream, tickers);
-                            }
+                            using Stream stream = item.Open();
+                            ExtractTickersFromStream(stream, tickers);
                         }
                     }
                 }
@@ -121,31 +118,30 @@ namespace Hilres.TiingoApi
         /// <param name="tickers">Ticker list to add to.</param>
         private static void ExtractTickersFromStream(Stream stream, IList<TiingoStockTicker> tickers)
         {
-            using (TextReader reader = new StreamReader(stream))
-            {
-                // Skip header.
-                string[] header = CSV.Import(reader);
+            using TextReader reader = new StreamReader(stream);
 
-                string[] item;
-                while ((item = CSV.Import(reader)) != null)
+            // Skip header.
+            string[] header = CSV.Import(reader);
+
+            string[] item;
+            while ((item = CSV.Import(reader)) != null)
+            {
+                tickers.Add(new TiingoStockTicker
                 {
-                    tickers.Add(new TiingoStockTicker
-                    {
-                        Ticker = item[0],
-                        Exchange = item[1],
-                        AssetType = item[2],
-                        PriceCurrency = item[3],
-                        StartDate = Parse.NullDateTime(item[4]),
-                        EndDate = Parse.NullDateTime(item[5]),
-                    });
-                }
+                    Ticker = item[0],
+                    Exchange = item[1],
+                    AssetType = item[2],
+                    PriceCurrency = item[3],
+                    StartDate = Parse.NullDateTime(item[4]),
+                    EndDate = Parse.NullDateTime(item[5]),
+                });
             }
         }
 
         /// <summary>
         /// Get the response text from the web exception.
         /// </summary>
-        /// <param name="e">WebException</param>
+        /// <param name="e">WebException.</param>
         /// <returns>Response text.</returns>
         private static string GetResponce(WebException e)
         {
@@ -153,13 +149,11 @@ namespace Hilres.TiingoApi
             if (e.Response != null
                 && e.Response.GetResponseStream() != null)
             {
-                using (MemoryStream stream = new MemoryStream())
-                using (StreamReader textStream = new StreamReader(stream, System.Text.Encoding.ASCII))
-                {
-                    e.Response.GetResponseStream().CopyTo(stream);
-                    stream.Position = 0;
-                    text = textStream.ReadToEnd();
-                }
+                using MemoryStream stream = new MemoryStream();
+                using StreamReader textStream = new StreamReader(stream, System.Text.Encoding.ASCII);
+                e.Response.GetResponseStream().CopyTo(stream);
+                stream.Position = 0;
+                text = textStream.ReadToEnd();
             }
 
             return text;
@@ -178,54 +172,52 @@ namespace Hilres.TiingoApi
         {
             return await this.GetResponseAsync<TResult>(requestPath, responseStream =>
             {
-                using (MemoryStream stream = new MemoryStream())
-                using (StreamReader textStream = new StreamReader(stream, System.Text.Encoding.ASCII))
+                using MemoryStream stream = new MemoryStream();
+                using StreamReader textStream = new StreamReader(stream, System.Text.Encoding.ASCII);
+                responseStream.CopyTo(stream);
+                stream.Position = 0;
+                string jsonText = textStream.ReadToEnd();
+                stream.Position = 0;
+
+                // Convert stream to an object.
+                try
                 {
-                    responseStream.CopyTo(stream);
-                    stream.Position = 0;
-                    string jsonText = textStream.ReadToEnd();
-                    stream.Position = 0;
-
-                    // Convert stream to an object.
-                    try
+                    if (typeof(TResult) == typeof(TiingoList<TItem>))
                     {
-                        if (typeof(TResult) == typeof(TiingoList<TItem>))
-                        {
-                            // Get an array.
-                            DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(TItem[]));
-                            TItem[] serializedObj = (TItem[])serializer.ReadObject(stream);
+                        // Get an array.
+                        DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(TItem[]));
+                        TItem[] serializedObj = (TItem[])serializer.ReadObject(stream);
 
-                            TiingoList<TItem> result = new TiingoList<TItem>
-                            {
-                                ApiErrorMessage = null,
-                                ApiRawJson = jsonText,
-                                ApiSuccessful = true,
-                                Items = serializedObj,
-                            };
-
-                            return result as TResult;
-                        }
-                        else
+                        TiingoList<TItem> result = new TiingoList<TItem>
                         {
-                            // Get an Item.
-                            DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(TResult));
-                            TResult serializedObj = (TResult)serializer.ReadObject(stream);
-
-                            serializedObj.ApiErrorMessage = null;
-                            serializedObj.ApiRawJson = jsonText;
-                            serializedObj.ApiSuccessful = true;
-                            return serializedObj;
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        return new TResult
-                        {
-                            ApiErrorMessage = e.Message,
+                            ApiErrorMessage = null,
                             ApiRawJson = jsonText,
-                            ApiSuccessful = false,
+                            ApiSuccessful = true,
+                            Items = serializedObj,
                         };
+
+                        return result as TResult;
                     }
+                    else
+                    {
+                        // Get an Item.
+                        DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(TResult));
+                        TResult serializedObj = (TResult)serializer.ReadObject(stream);
+
+                        serializedObj.ApiErrorMessage = null;
+                        serializedObj.ApiRawJson = jsonText;
+                        serializedObj.ApiSuccessful = true;
+                        return serializedObj;
+                    }
+                }
+                catch (Exception e)
+                {
+                    return new TResult
+                    {
+                        ApiErrorMessage = e.Message,
+                        ApiRawJson = jsonText,
+                        ApiSuccessful = false,
+                    };
                 }
             });
         }
@@ -258,11 +250,9 @@ namespace Hilres.TiingoApi
 
             try
             {
-                using (HttpWebResponse response = (HttpWebResponse)(await request.GetResponseAsync()))
-                using (Stream responseStream = response.GetResponseStream())
-                {
-                    return func(responseStream);
-                }
+                using HttpWebResponse response = (HttpWebResponse)(await request.GetResponseAsync());
+                using Stream responseStream = response.GetResponseStream();
+                return func(responseStream);
             }
             catch (WebException e)
             {

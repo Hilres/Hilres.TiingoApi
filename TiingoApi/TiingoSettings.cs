@@ -19,7 +19,7 @@ namespace Hilres.TiingoApi
         ///   {
         ///     "AuthorizationToken": "Token goes here"
         ///   }
-        /// }
+        /// }.
         /// </summary>
         /// <param name="configuration">TiingoSettings will be bind to IConfiguration.</param>
         public TiingoSettings(IConfiguration configuration)

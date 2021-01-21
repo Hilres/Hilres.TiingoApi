@@ -17,7 +17,7 @@ namespace Hilres.TiingoApi
         /// <summary>
         /// Append a date parameter if there is a date.
         /// </summary>
-        /// <param name="builder">StringBuilder</param>
+        /// <param name="builder">StringBuilder.</param>
         /// <param name="name">Name of parameter.</param>
         /// <param name="date">Date to append if not null.</param>
         internal static void AppendUrlParamter(this StringBuilder builder, string name, DateTime? date)
@@ -32,7 +32,7 @@ namespace Hilres.TiingoApi
         /// <summary>
         /// Append a text parameter if there is a date.
         /// </summary>
-        /// <param name="builder">StringBuilder</param>
+        /// <param name="builder">StringBuilder.</param>
         /// <param name="name">Name of parameter.</param>
         /// <param name="text">Text to append if not null.</param>
         internal static void AppendUrlParamter(this StringBuilder builder, string name, string text)
@@ -47,8 +47,8 @@ namespace Hilres.TiingoApi
         /// <summary>
         /// Add token authentication to the header HttpWebRequest.
         /// </summary>
-        /// <param name="request">HttpWebRequest</param>
-        /// <param name="authorizationToken">The authorization token</param>
+        /// <param name="request">HttpWebRequest.</param>
+        /// <param name="authorizationToken">The authorization token.</param>
         internal static void SetTokenAuthentication(this HttpWebRequest request, string authorizationToken)
         {
             if (!string.IsNullOrWhiteSpace(authorizationToken))

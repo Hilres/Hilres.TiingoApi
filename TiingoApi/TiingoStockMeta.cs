@@ -14,13 +14,13 @@ namespace Hilres.TiingoApi
     public class TiingoStockMeta : TiingoResponse
     {
         /// <summary>
-        /// Gets (String) Long-form description of the asset
+        /// Gets (String) Long-form description of the asset.
         /// </summary>
         [DataMember(Name = "description")]
         public string Description { get; internal set; }
 
         /// <summary>
-        /// Gets (date) The latest date we have price data available
+        /// Gets (date) The latest date we have price data available.
         /// </summary>
         public DateTime? EndDate => Parse.NullDateTime(this.EndDateRaw);
 
@@ -31,30 +31,30 @@ namespace Hilres.TiingoApi
         public string Exchange { get; internal set; }
 
         /// <summary>
-        /// Gets (String) Full-length name of the fund
+        /// Gets (String) Full-length name of the fund.
         /// </summary>
         [DataMember(Name = "name")]
         public string Name { get; internal set; }
 
         /// <summary>
-        /// Gets (date) The earliest date we have price data available
+        /// Gets (date) The earliest date we have price data available.
         /// </summary>
         public DateTime? StartDate => Parse.NullDateTime(this.StartDateRaw);
 
         /// <summary>
-        /// Gets (String) Ticker related to the asset
+        /// Gets (String) Ticker related to the asset.
         /// </summary>
         [DataMember(Name = "ticker")]
         public string Ticker { get; internal set; }
 
         /// <summary>
-        /// Gets or sets (date) The latest date we have price data available
+        /// Gets or sets (date) The latest date we have price data available.
         /// </summary>
         [DataMember(Name = "endDate")]
         internal string EndDateRaw { get; set; }
 
         /// <summary>
-        /// Gets or sets (date) The earliest date we have price data available
+        /// Gets or sets (date) The earliest date we have price data available.
         /// </summary>
         [DataMember(Name = "startDate")]
         internal string StartDateRaw { get; set; }

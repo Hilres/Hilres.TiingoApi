@@ -49,7 +49,7 @@ namespace Hilres.TiingoApi
         public DateTime? Date => Parse.NullDateTime(this.DateRaw);
 
         /// <summary>
-        /// Gets (float) the dividend paid out on "date" (note that "date" will be the "exDate" for the dividend)
+        /// Gets (float) the dividend paid out on "date" (note that "date" will be the "exDate" for the dividend).
         /// </summary>
         public float? Dividend => Parse.NullFloat(this.DividendRaw);
 
@@ -69,7 +69,7 @@ namespace Hilres.TiingoApi
         public float? Open => Parse.NullFloat(this.OpenRaw);
 
         /// <summary>
-        /// Gets (float) a factor used when a company splits or reverse splits. On days where there is ONLY a split (no dividend payment), you can calculate the adjusted close as follows: adjClose = "Previous Close"/splitFactor
+        /// Gets (float) a factor used when a company splits or reverse splits. On days where there is ONLY a split (no dividend payment), you can calculate the adjusted close as follows: adjClose = "Previous Close"/splitFactor.
         /// </summary>
         public float? SplitFactor => Parse.NullFloat(this.SplitFactorRaw);
 
@@ -121,7 +121,7 @@ namespace Hilres.TiingoApi
         internal string DateRaw { get; set; }
 
         /// <summary>
-        /// Gets or sets (float) the dividend paid out on "date" (note that "date" will be the "exDate" for the dividend)
+        /// Gets or sets (float) the dividend paid out on "date" (note that "date" will be the "exDate" for the dividend).
         /// </summary>
         [DataMember(Name = "divCash")]
         internal string DividendRaw { get; set; }
@@ -145,7 +145,7 @@ namespace Hilres.TiingoApi
         internal string OpenRaw { get; set; }
 
         /// <summary>
-        /// Gets or sets (float) a factor used when a company splits or reverse splits. On days where there is ONLY a split (no dividend payment), you can calculate the adjusted close as follows: adjClose = "Previous Close"/splitFactor
+        /// Gets or sets (float) a factor used when a company splits or reverse splits. On days where there is ONLY a split (no dividend payment), you can calculate the adjusted close as follows: adjClose = "Previous Close"/splitFactor.
         /// </summary>
         [DataMember(Name = "splitFactor")]
         internal string SplitFactorRaw { get; set; }
